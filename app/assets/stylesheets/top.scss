@@ -1,3 +1,41 @@
-// Place all the styles related to the top controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.topPage {
+  min-height: 93vh;
+  padding-top: 30px;
+  background: #bababa;
+  overflow-x: scroll;
+  .listWrapper {
+    display: flex;
+    height: 100%;
+    align-items: baseline;
+    .list {
+      position: relative;
+      background: #e2e4e6;
+      padding: 10px;
+      margin-left: 20px;
+      min-width: 250px;
+      &:last-child {
+        margin-right: 20px;
+      }
+      &_header {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        &_title {
+          font-size: 20px;
+          margin: 0;
+        }
+        &_action {
+          .fa-pen,
+          .fa-trash {
+            font-size: 18px;
+            color: #8c8c8c;
+          }
+          .fa-trash {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
