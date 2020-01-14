@@ -1,0 +1,15 @@
+<header class="header">
+  <nav class="nav">
+    <ul class="header_menu">
+      <li class="nav-link"><%= current_user.name %>さん</li>
+      <li class="header_menu_title"><%= link_to "kanban", root_path, class: "nav-link" %></li>
+      <li>
+        <ul class="header_menu_inner">
+          <%# リストを作成するリンクは今後開発していくので、今は"#"にしておきます。 %>
+          <li><%= link_to "リストを作成", "#", class: "nav-link listNew" %></li>
+          <li><%= link_to "サインアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+</header>
