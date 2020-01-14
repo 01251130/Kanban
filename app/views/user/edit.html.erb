@@ -1,0 +1,12 @@
+<div class="listeditPage">
+  <div class="container">
+    <%= form_with model: @user, url: { action: :update }, html: { class: 'listForm' }, local: true do |f| %>
+      <% if @user.errors.any? %>
+        <p class="text-danger">名前は1～20文字以内で入力してください</p>
+      <% end %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "form-control listName", placeholder: "名前を入力してください" %>
+      <div class="text-center"><%= f.submit "編集する", class: "submitBtn" %></div>
+    <% end %>
+  </div>
+</div>

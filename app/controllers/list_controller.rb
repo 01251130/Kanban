@@ -36,6 +36,6 @@ class ListController < ApplicationController
   end
 
   def set_list
-    @list = List.find_by(id: params[:id])
+    @list = List.find(params[:id])
   end
 end
