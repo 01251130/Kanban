@@ -1,0 +1,40 @@
+.carddetailPage {
+  .cardContents {
+    margin: 60px auto 0;
+    max-width: 600px;
+    &_title {
+      h2 {
+        font-size: 22px;
+      }
+    }
+    &_title,
+    &_memo,
+    &_listStatus {
+      border-bottom: 1px solid #ccc;
+      margin-bottom: 30px;
+    }
+    &_btnArea {
+      margin-top: 40px;
+      text-align: center;
+      & > a {
+        display: block;
+        &.edit_btn {
+          max-width: 200px;
+          margin: 0 auto;
+          background: #026aa7;
+          padding: 7px;
+          border-radius: 10px;
+          color: #fff;
+          transition: opacity 0.5s;
+          text-decoration: none;
+          &:hover {
+            opacity: 0.7;
+          }
+        }
+        &.delete_btn {
+          margin-top: 20px;
+        }
+      }
+    }
+  }
+}

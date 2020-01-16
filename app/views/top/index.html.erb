@@ -9,6 +9,22 @@
             <%= link_to(content_tag(:i, '', class: 'fas fa-pen'), edit_list_path(list)) %>
           </div>
         </div>
+        <div class="cardWrapper">
+          <% list.cards.each do |card| %>
+            <%= link_to list_card_path(list, card), class:"cardDetail_link" do %>
+              <div class="card">
+                <h3 class="card_title"><%= card.title %></h3>
+                <% if card.memo.size > 0 %>
+                  <div class="card_detail is-exist"><i class="fas fa-bars"></i></div>
+                <% end %>
+              </div>
+            <% end %>
+          <% end %>        
+          <div class="addCard">
+            <i class="far fa-plus-square"></i>
+            <%= link_to "さらにカードを追加", new_list_card_path(list), class: "addCard_link" %>
+          </div>
+        </div>
       </div>
     <% end %>
   </div>
