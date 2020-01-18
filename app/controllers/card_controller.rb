@@ -55,6 +55,11 @@ class CardController < ApplicationController
   end
 
   def destroy
+    # 削除されたカードよりorderが大きいカードは、orderを-1する
+    cards = Card.where(list_id: params[:list_id], order: @card.order+1..Float::INFINITY)
+    cards.each { |card|
+      card.update_attributes(order: card.order-1)
+    }
     @card.destroy
     redirect_to :root
   end
