@@ -25,6 +25,7 @@ class CardController < ApplicationController
   end
 
   def update
+    logger.debug "update START!"
     # リストに変更があった場合、orderも更新
     if params[:list_id] != card_params[:list_id]
       @card.order = Card.where(list_id: card_params[:list_id]).maximum(:order).to_i + 1    # Listにカードが存在しない場合、nilが返却されるので問題なく動くようにto_iする
@@ -45,14 +46,20 @@ class CardController < ApplicationController
       order_after = card_params[:order].to_i
       # 変更前のorder > 変更後のorder
       if @card.order > order_after
+        logger.debug "@card: #{@card}"
+        logger.debug "order_after: #{order_after}"
         (order_after..@card.order-1).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
+          logger.debug "@card_order: #{@card_order}"
           @card_order.update_attributes(order: n+1)
         }
       # 変更前のorder < 変更後のorder
       elsif @card.order < order_after
+        logger.debug "@card: #{@card}"
+        logger.debug "order_after: #{order_after}"
         (@card.order+1..order_after).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
+          logger.debug "@card_order: #{@card_order}"
           @card_order.update_attributes(order: n-1)
         }
       end
