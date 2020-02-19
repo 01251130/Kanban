@@ -8,7 +8,7 @@ class CardController < ApplicationController
 
   def create
     @card = Card.new(card_params)
-    @card.order = Card.where(list_id: params[:list_id]).maximum(:order).to_i + 1    # Listにカードが存在しない場合、nilが返却されるので問題なく動くようにto_iする
+    # @card.order = Card.where(list_id: params[:list_id]).maximum(:order).to_i + 1    # Listにカードが存在しない場合、nilが返却されるので問題なく動くようにto_iする
     if @card.save
       redirect_to :root
     else
