@@ -28,6 +28,18 @@ class CardController < ApplicationController
     # リストに変更があった場合、orderも更新
     if params[:list_id] != card_params[:list_id]
       @card.order = Card.where(list_id: card_params[:list_id]).maximum(:order).to_i + 1    # Listにカードが存在しない場合、nilが返却されるので問題なく動くようにto_iする
+    # ★
+    # require 'byebug'; byebug
+    # card_paramsに、以下のような形でrow_order_positionに最大値を設定できればいけるはず
+    # <ActionController::Parameters {"row_order_position"=>"1"} permitted: true>
+    # params[item_data.modelName] = {row_order_position: item.index()};
+      # p card_params
+      # card_params[:title] = "21"
+      # card_params[:row_order_position] = Card.where(list_id: card_params[:list_id]).maximum(:order).to_i + 1
+      # p card_params
+      # card_params[:row_order_position] = Card.rank(:row_order).all
+    # ★
+
     # 並び順に変更があった場合
     elsif @card.order != card_params[:order]
       order_after = card_params[:order].to_i
@@ -66,7 +78,6 @@ class CardController < ApplicationController
 
   def sort
     card = Card.find(params[:card_id])
-    # after_list_idをlist_idとして渡して処理したい
     card.update(card_params)
     render body: nil
   end
@@ -74,7 +85,7 @@ class CardController < ApplicationController
   
   private
     def card_params
-      params.require(:card).permit(:title, :memo, :list_id, :order, :row_order_position, :after_list_id)
+      params.require(:card).permit(:title, :memo, :list_id, :order, :row_order_position)
     end
 
     def set_card
