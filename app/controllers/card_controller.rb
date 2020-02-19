@@ -43,10 +43,13 @@ class CardController < ApplicationController
 
     # 並び順に変更があった場合
     elsif @card.order != card_params[:order]
+      logger.debug "@card.order: #{@card.order}"
+      logger.debug "card_params: #{card_params}"
       order_after = card_params[:order].to_i
       # 変更前のorder > 変更後のorder
       if @card.order > order_after
-        logger.debug "@card: #{@card}"
+        logger.debug "変更前のorder > 変更後のorder"
+        logger.debug "@card.order: #{@card.order}"
         logger.debug "order_after: #{order_after}"
         (order_after..@card.order-1).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
@@ -55,7 +58,8 @@ class CardController < ApplicationController
         }
       # 変更前のorder < 変更後のorder
       elsif @card.order < order_after
-        logger.debug "@card: #{@card}"
+        logger.debug "変更前のorder < 変更後のorder"
+        logger.debug "@card.order: #{@card.order}"
         logger.debug "order_after: #{order_after}"
         (@card.order+1..order_after).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
