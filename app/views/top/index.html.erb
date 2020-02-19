@@ -10,16 +10,20 @@
           </div>
         </div>
         <div class="cardWrapper">
-          <% list.cards.order(:order).each do |card| %>
-            <%= link_to list_card_path(list, card), class:"cardDetail_link" do %>
-              <div class="card">
-                <h3 class="card_title"><%= card.title %></h3>
-                <% if card.memo.size > 0 %>
-                  <div class="card_detail is-exist"><i class="fas fa-bars"></i></div>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>        
+          <div class="cardList">
+            <% list.cards.rank(:row_order).each do |card| %>
+              <%= content_tag "div", id: "card-#{card.id}", data: { model_name: card.class.name.underscore, update_url: list_card_sort_path(card.list, card)} do %>
+                <div class="card">
+                  <%= link_to list_card_path(list, card), class:"cardDetail_link" do %>
+                    <div class="card_title"><%= card.title %></div>
+                    <% if card.memo.size > 0 %>
+                      <div class="card_detail is-exist"><i class="fas fa-bars"></i></div>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            <% end %>  
+          </div>      
           <div class="addCard">
             <i class="far fa-plus-square"></i>
             <%= link_to "さらにカードを追加", new_list_card_path(list), class: "addCard_link" %>

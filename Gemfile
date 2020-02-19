@@ -70,4 +70,8 @@ gem 'devise'
 gem 'devise-i18n'
 gem 'devise-i18n-views'
 
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'ranked-model'
+
 gem 'pg', group: :production

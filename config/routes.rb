@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   resources :list, only: %i(new create edit update destroy) do
     # 以下は、右記と同義。  resources :card, only: %i(new create show edit update destroy)
-    resources :card, except: %i(index)
+    resources :card, except: %i(index) do
+      put :sort
+    end
  end
   resources :user, only: %i(edit update)
 

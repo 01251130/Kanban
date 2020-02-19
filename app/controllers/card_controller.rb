@@ -21,7 +21,7 @@ class CardController < ApplicationController
 
   def edit
     @lists = List.where(user: current_user)
-    @cards = Card.where(list_id: params[:list_id]).order(:order)
+    @cards = Card.where(list_id: params[:list_id]).rank(:row_order)
   end
 
   def update
@@ -64,9 +64,17 @@ class CardController < ApplicationController
     redirect_to :root
   end
 
+  def sort
+    card = Card.find(params[:card_id])
+    # after_list_idをlist_idとして渡して処理したい
+    card.update(card_params)
+    render body: nil
+  end
+
+  
   private
     def card_params
-      params.require(:card).permit(:title, :memo, :list_id, :order)
+      params.require(:card).permit(:title, :memo, :list_id, :order, :row_order_position, :after_list_id)
     end
 
     def set_card
