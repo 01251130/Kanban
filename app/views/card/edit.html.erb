@@ -16,6 +16,7 @@
         <label>リスト名</label>
         <%= select :card, :list_id, @lists.map{ |l| [l.title, l.id] }, {}, { class: 'form-control' } %>
       </div>
+      <%= f.hidden_field :order, value: @card.order %>
       <div class="text-center"><%= f.submit "更新する", class: "submitBtn" %></div>
     <% end %>
   </div>
