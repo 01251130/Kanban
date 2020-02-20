@@ -24,46 +24,27 @@ class CardController < ApplicationController
     @cards = Card.where(list_id: params[:list_id]).rank(:row_order)
   end
 
+  # TODO: 実装できていないこと
+  # １：カードの編集画面からリストを変更した際に、row_orderが更新されず、変な部分にカードが移動してしまう
+  # edit画面にてリストの並び替えを行なった場合、row_orderを最大値に更新し、最下部に来るようにしたい
+  # card_paramsに、以下のような形でrow_order_positionに最大値を設定できればいけるかも？
   def update
-    logger.debug "update START!"
     # リストに変更があった場合、orderも更新
     if params[:list_id] != card_params[:list_id]
       @card.order = Card.where(list_id: card_params[:list_id]).maximum(:order).to_i + 1    # Listにカードが存在しない場合、nilが返却されるので問題なく動くようにto_iする
-    # ★
-    # require 'byebug'; byebug
-    # card_paramsに、以下のような形でrow_order_positionに最大値を設定できればいけるはず
-    # <ActionController::Parameters {"row_order_position"=>"1"} permitted: true>
-    # params[item_data.modelName] = {row_order_position: item.index()};
-      # p card_params
-      # card_params[:title] = "21"
-      # card_params[:row_order_position] = Card.where(list_id: card_params[:list_id]).maximum(:order).to_i + 1
-      # p card_params
-      # card_params[:row_order_position] = Card.rank(:row_order).all
-    # ★
-
     # 並び順に変更があった場合
     elsif @card.order != card_params[:order]
-      logger.debug "@card.order: #{@card.order}"
-      logger.debug "card_params: #{card_params}"
       order_after = card_params[:order].to_i
       # 変更前のorder > 変更後のorder
       if @card.order > order_after
-        logger.debug "変更前のorder > 変更後のorder"
-        logger.debug "@card.order: #{@card.order}"
-        logger.debug "order_after: #{order_after}"
         (order_after..@card.order-1).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
-          logger.debug "@card_order: #{@card_order}"
           @card_order.update_attributes(order: n+1)
         }
       # 変更前のorder < 変更後のorder
       elsif @card.order < order_after
-        logger.debug "変更前のorder < 変更後のorder"
-        logger.debug "@card.order: #{@card.order}"
-        logger.debug "order_after: #{order_after}"
         (@card.order+1..order_after).each {|n| 
           @card_order = Card.find_by(list_id: params[:list_id], order: n)
-          logger.debug "@card_order: #{@card_order}"
           @card_order.update_attributes(order: n-1)
         }
       end
